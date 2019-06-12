@@ -8,11 +8,14 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 import java.util.List;
+
 import jpabook.jpashop.user.domain.Member;
 import jpabook.jpashop.user.exception.AlreadyExistsUsernameException;
 import jpabook.jpashop.user.repository.MemberRepository;
+import jpabook.jpashop.user.web.MemberDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,13 +31,16 @@ public class MemberServiceImplTest {
   @MockBean
   private MemberRepository repository;
 
+  @Autowired
+  private ModelMapper modelMapper;
+
   @Test(expected = AlreadyExistsUsernameException.class)
   public void _01_이미_등록된_username_은_AlreadyExistsUsernameException() {
     // GIVEN
     given(repository.existsByUsername(anyString())).willReturn(true);
 
     // WHEN
-    Member tester = new Member();
+    MemberDTO tester = new MemberDTO();
     tester.setUsername("tester");
     tester.setName("tester");
 
@@ -47,14 +53,14 @@ public class MemberServiceImplTest {
   public void _02_가입_성공() {
     // GIVEN
     // WHEN
-    Member tester = new Member();
+    MemberDTO tester = new MemberDTO();
     tester.setUsername("tester");
     tester.setName("tester");
 
-    final Member member = service.signUp(tester);
+    final MemberDTO member = service.signUp(tester);
 
     // THEN
-    verify(repository, times(1)).save(tester);
+    verify(repository, times(1)).save(modelMapper.map(tester, Member.class));
   }
 
   @Test
@@ -67,7 +73,7 @@ public class MemberServiceImplTest {
     given(repository.findAll()).willReturn(members);
 
     // WHEN
-    final List<Member> list = service.getUsers(null);
+    final List<MemberDTO> list = service.getUsers(null);
 
     // THEN
     assertThat(list).isNotNull();

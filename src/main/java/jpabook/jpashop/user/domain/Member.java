@@ -1,5 +1,7 @@
 package jpabook.jpashop.user.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jpabook.jpashop.entity.auditor.AuditorEntity;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 @Entity
 @Setter
@@ -38,11 +38,4 @@ public class Member extends AuditorEntity implements Serializable {
   @Embedded
   private Address address;
 
-  @Setter
-  @Getter
-  public static class Search {
-
-    private String type;
-    private String keyword;
-  }
 }

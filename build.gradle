@@ -15,6 +15,7 @@ buildscript {
 plugins {
     id "io.spring.dependency-management" version "1.0.7.RELEASE"
     id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'checkstyle'
     id 'idea'
     id 'java'
 }
@@ -36,10 +37,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'com.h2database:h2'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
+    implementation 'org.modelmapper:modelmapper:2.3.4'
 }
 
 
