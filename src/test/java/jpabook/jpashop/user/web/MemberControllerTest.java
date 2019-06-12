@@ -88,7 +88,7 @@ public class MemberControllerTest {
   @Test
   public void 회원목록을_불러와요() throws Exception {
     // given
-    Member member = new Member();
+    MemberDTO member = new MemberDTO();
     member.setUsername("test");
     member.setName("tester");
 
